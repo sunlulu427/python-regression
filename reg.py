@@ -56,6 +56,9 @@ data.head()
 t = np.arange(0, len(data) / 100.0, 0.01).reshape(-1, 1)
 print('数据的长度:', len(t))
 print('时间：', t)
+
+time = np.arange(0, 1.5 * len(data) / 100, 0.01).reshape(-1, 1)
+
 vals = data['0'].values
 print('数据', vals)
 
@@ -69,17 +72,27 @@ print('数据', vals)
 #plt.show()
 
 # 定义函数
-def model_fit(regr):
-	regr.fit(t, vals)
-	y_pred = regr.predict(t)
+def model_fit(model):
+	model.fit(t, vals)
+	y_pred = model.predict(t)
 	plt.figure(figsize=(14,4))
 	plt.plot(t, vals, color='g')
 	plt.plot(t, y_pred, color='r')
 	plt.show()
-	print('params:', regr.get_params())
+	print('Score:+++', model.score(t, vals))
 
-#model_fit(model_LinearRegression)
-model_fit(model_RandomForestRegressor)
+
+def model_pre(regr):
+	model.fit(t, vals)
+	y_pred = model.predict(time)
+	plt.figure(figsize=(14,4))
+	plt.plot(t, vals, color='g')
+	plt.plot(time, y_pred, color='r')
+	plt.show()
+	print('Score:+++', model.score(t, vals))
+
+model_fit(model_DecisionTreeRegressor)
+
 # 定义多元模型
 def model_function(regr):
 	pf = PolynomialFeatures(degree=2)
